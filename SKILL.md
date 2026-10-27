@@ -1,6 +1,6 @@
 ---
 name: iron-mountain-exit
-description: Plan and cost a company's exit from offsite records storage (Iron Mountain or similar). Use when a user wants to analyze a records-storage inventory export and price list, verify AI-generated cost sheets, compare phased exit plans (destroy vs bring on-site), or negotiate storage-exit fees.
+description: Plan and cost a company's exit from offsite records storage (Iron Mountain or similar). Use when a user wants to analyze a records-storage inventory export and price list, verify AI-generated cost sheets, compare phased exit plans (destroy vs bring on-site, or bring everything home), size plans to an annual budget, estimate on-site retention-review hours, price a third party's share of storage, or negotiate storage-exit fees.
 ---
 
 # Exiting offsite records storage (Iron Mountain-style vendors)
@@ -51,9 +51,12 @@ spreadsheet-AI-generated analyses):
   cheaper out. Compute the payback with the customer's actual rates.
 - Every month of delay burns `remaining CF x storage rate`. Stretching an exit never saves
   total money; it only spreads cash.
-- Storage rates escalate annually (customers report high single digits or worse). A flat
-  all-in budget cap can be eaten by escalation so removals stop and **the exit never
-  finishes** - always model this scenario to kill it.
+- Storage rates reset annually (the vendor's renewal letter states the effective date, often
+  July 1, but not the percentage). The large vendor describes its contracts as carrying annual,
+  upward-only CPI-type escalators and reports mid-single-digit pricing gains to investors - use
+  ~5% as a sourced default and **label it an assumption**; the customer's past Schedule A letters
+  or invoices give the real figure. A flat all-in budget cap can be eaten by escalation so
+  removals stop and **the exit never finishes** - always model this scenario to kill it.
 
 ## 5. Plan archetypes (model all four)
 
@@ -73,6 +76,47 @@ Present finance the **incremental view**: year-1 all-in minus the current run-ra
 list rates - they usually land within ~$1/CF. Decide on labor, chain of custody and
 certificates; keep whichever you did not pick as a negotiation lever ("quote destruction
 in place with retrieval waived").
+
+### Variant: bring every box home (no destruction decisions)
+
+When the client says "no destruction decisions - we review retention on our own shelves":
+
+- **Route by owner, not by warehouse**: map each division/department to a receiving site and
+  price each site's truck visits at the zone the vendor states for that site.
+- **The exit toll is fixed** (~$39 per standard 1.2 CF box at list rates); only rent varies.
+  So **fastest = cheapest in total**, and "cheapest per year" is a different question from
+  "cheapest". Present three to five plans: fastest (recommended), a gentler fixed-cadence
+  plan (e.g. one truck a week), and budget-paced plans.
+- **Budget-paced plans**: state what the budget covers. Default convention: the annual
+  budget pays the MOVE (exit fees + trucks); rent stays on the existing vendor line. If the
+  budget must also cover rent, it collapses into the flat-cap trap above.
+- **"How many boxes a month?"** Solve the pace in **cubic feet** (that is what fees bill on),
+  then report boxes per month **per site, per year**. Box counts drift when later warehouses
+  hold bigger boxes even though CF per month is constant - say so, or readers think the
+  pace slowed. Search the highest monthly pace whose moving cost fits each calendar year,
+  and hold that pace in the final year (no lump at the end). Split boxes between sites by
+  box share so both sites finish together.
+- Raising the annual budget (e.g. $90K -> $110K) mostly buys months of rent back; show both.
+
+### On-site retention review workload
+
+Once boxes are home, someone verifies the completion date of each record. Planning model:
+~45 min per standard box (~25 records x ~1.5 min + indexing), +33% buffer for mixed or
+fragile boxes, +10% supervisor/QA sample = ~66 min per standard box, pro-rated by CF.
+Reviewers per site = ceil(hours / ((delivery months + 3) x ~140 productive h/month)).
+Show the hours per site (they do not depend on the plan) and the head-count per plan;
+note that boxes on your own shelves cost nothing, so the review can run slower with fewer
+people. Keep this labor out of the vendor totals.
+
+### Pricing a third party's share (e.g. a divested predecessor's boxes)
+
+If another company owns some boxes since a separation date, compute what it should
+reimburse: its CF x storage rate x months since separation, plus its pro-rata share of the
+admin fee. Back-calculate older years with the escalation assumption - note that a HIGHER
+assumed escalation LOWERS the claim (past rates were cheaper), so the flat today's-rate figure
+is the upper bound. Add the ongoing monthly accrual, the storage-minimum tail once your own
+boxes leave, and their exit cost if they want the boxes out. The invoices give the exact
+figure; the model gives the range for the letter.
 
 Simulate monthly (see `scripts/exit_model.py`): bill storage on month-start volume, apply the
 storage minimum and admin fee until the account closes, front-load removals.
@@ -139,6 +183,11 @@ and kill digitization with the vendor's own scan price (~$0.50/page makes a full
 vs ~$40 to remove). Have the package independently reviewed before it goes up.
 
 ## 12. Deliverables to produce
+
+Keep it lean when the reader is an operations lead: one summary tab, one assumptions tab with
+every price sourced (contract fact vs estimate), one month-by-month tab per plan showing boxes
+and trucks per site, the review-hours tab, and a box-routing list with each plan's month. A
+"where does this number come from" answer for every assumption saves rounds of questions.
 
 - A formula-driven workbook: assumptions/rates tab, verified inventory summary, corrections
   tab, monthly cash-flow grid per plan, native charts.
