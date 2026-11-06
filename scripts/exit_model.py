@@ -5,7 +5,8 @@ Usage:
   python3 exit_model.py --cf 5000 --destroy-cf 2000 --storage 1.00 \
       --retrieval 10 --handling 10 --withdrawal 15 --visit 125
 
-All rates are illustrative; replace with the customer's Schedule A.
+All defaults are round placeholders, not real contract rates; replace them with the
+customer's Schedule A.
 """
 import argparse, json
 
